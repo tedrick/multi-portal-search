@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Portal Search</title>
+        
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        
+        <style>
+        
+            body {
+                background: #e7e5df;
+                padding-top: 60px; 
+            }
+            
+            form input[type=text] {
+                height: 1.25em;
+            }
+            
+            #searchForm {
+                margin-left: 0px;
+                margin-right: auto;
+            }
+            
+            .column {
+                width: 30%;
+                min-width: 30%;
+                height: 100%;
+            }
+            
+        </style>
+        
+        <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        
+	</head>
+
+	<body>
+        
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <form id="searchForm" class="form-inline">
+                        <input type="text" id="inputKeyword" class="input-xxlarge" style="font-size: 2em" placeholder="Enter a keyword or advanced query">
+                        <button id="btnGo" class="btn btn-large" type="submit">Go!</button>
+                        <!--<button id="btnClear" class="btn btn-large" type="button">Clear Results</button>-->
+                    </form>
+                    <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#//02r3000000mn000000" target="_blank">Advanced Search Options</a>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div id="portal1" class="span4 form-inline">
+                    Portal 1
+                    <input type="text" id="inputPortal1" value="https://arcgis.com/">
+                </div>
+                <div id="portal2" class="span4 form-inline">
+                    Portal 2
+                    <input type="text" id="inputPortal2" placeholder="https://myportal.com/">
+                </div>
+                <div id="portal2" class="span4 form-inline">
+                    Portal 3
+                    <input type="text" id="inputPortal3" placeholder="https://myportal.com/">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="span4">
+                    <ul id="results1" class="unstyled"></ul>
+                </div>
+                <div class="span4">
+                    <ul id="results2" class="unstyled"></ul>
+                </div>
+                <div class="span4">
+                    <ul id="results3" class="unstyled"></ul>
+                </div>
+            </div>
+        </div>
+        
+        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <script>
+            
+            function searchPortal(url, keyword, numResults, callback) {
+                // Search the specified portal.
+                var searchParams = {
+                    q: keyword,
+                    num: numResults,
+                    sortField: "created",
+                    sortOrder: "desc",
+                    f: "json"
+                };
+                
+                $.getJSON(url + "sharing/rest/search?" + $.param(searchParams), function (response) {
+                    // Send the search query.
+                    callback(response.results);
+                });
+            }
+            
+            function appendResults(portal, div, results) {
+                // Loop through each result and list it in the specified column.
+                var html;
+                if (results.length === 0) {
+                    // There were no results.
+                    html = "<div class='alert alert-info'>0 results</div>"
+                    div.append(html);
+                }
+                else {
+                    html = "<div class='alert alert-info'>" + results.length + " results</div>"
+                    div.append(html);
+                    $.each(results, function(result) {
+                        console.log(results[result]);
+                        var itemHtml = "<li><a href=\"" + portal + "home/item.html?id=" + results[result].id + "\" target=\"_blank\">" + results[result].title + "</a></li>"
+                        div.append(itemHtml);
+                    });
+                }
+            }
+            
+            
+            function search(keyword) {
+                // Run the query.
+                $.when(searchPortal($("#inputPortal1").val(), keyword, 1000, function(results) {
+                    appendResults($("#inputPortal1").val(), $("#results1"), results);
+                }));
+                
+                // Run the query.
+                $.when(searchPortal($("#inputPortal2").val(), keyword, 10, function(results) {
+                    appendResults($("#inputPortal2").val(), $("#results2"), results);
+                }));
+                
+                // Run the query.
+                $.when(searchPortal($("#inputPortal3").val(), keyword, 10, function(results) {
+                    appendResults($("#inputPortal3").val(), $("#results3"), results);
+                }));
+            }
+            
+            function cleanUp() {
+                $("#results1").html("");
+                $("#results2").html("");
+                $("#results3").html("");
+            }
+            
+            $("#searchForm").submit(function() {
+                cleanUp();
+                var keyword = $("#inputKeyword").val();
+                search(keyword);
+                return false;
+            });
+            
+            $("#btnClear").click(function () {
+                cleanUp();
+            });
+            
+        </script>
+        
+    </body>
+</html>

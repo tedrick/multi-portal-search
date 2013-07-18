@@ -78,7 +78,7 @@
                 };
                 
                 $.getJSON(url + "sharing/rest/search?" + $.param(searchParams), function (response) {
-                    // Send the search query.
+                    // Send the search query and callback when they're ready.
                     callback(response.results);
                 });
             }
@@ -87,11 +87,12 @@
                 // Loop through each result and list it in the specified column.
                 var html;
                 if (results.length === 0) {
-                    // There were no results.
+                    // There were no results. :(
                     html = "<div class='alert alert-info'>0 results</div>"
                     div.append(html);
                 }
                 else {
+                    // There are results!
                     html = "<div class='alert alert-info'>" + results.length + " results</div>"
                     div.append(html);
                     $.each(results, function(result) {

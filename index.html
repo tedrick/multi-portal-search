@@ -18,17 +18,6 @@
                 height: 1.25em;
             }
             
-            #searchForm {
-                margin-left: 0px;
-                margin-right: auto;
-            }
-            
-            .column {
-                width: 30%;
-                min-width: 30%;
-                height: 100%;
-            }
-            
         </style>
         
         <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -36,14 +25,12 @@
 	</head>
 
 	<body>
-        
         <div class="container">
             <div class="row">
                 <div class="span12">
                     <form id="searchForm" class="form-inline">
                         <input type="text" id="inputKeyword" class="input-xxlarge" style="font-size: 2em" placeholder="Enter a keyword or advanced query">
                         <button id="btnGo" class="btn btn-large" type="submit">Go!</button>
-                        <!--<button id="btnClear" class="btn btn-large" type="button">Clear Results</button>-->
                     </form>
                     <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#//02r3000000mn000000" target="_blank">Advanced Search Options</a>
                 </div>
@@ -144,10 +131,6 @@
                 var keyword = $("#inputKeyword").val();
                 search(keyword);
                 return false;
-            });
-            
-            $("#btnClear").click(function () {
-                cleanUp();
             });
             
         </script>

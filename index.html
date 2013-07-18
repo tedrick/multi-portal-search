@@ -105,17 +105,17 @@
             
             function search(keyword) {
                 // Run the query.
-                $.when(searchPortal($("#inputPortal1").val(), keyword, 1000, function(results) {
+                $.when(searchPortal($("#inputPortal1").val(), keyword, 100, function(results) {
                     appendResults($("#inputPortal1").val(), $("#results1"), results);
                 }));
                 
                 // Run the query.
-                $.when(searchPortal($("#inputPortal2").val(), keyword, 10, function(results) {
+                $.when(searchPortal($("#inputPortal2").val(), keyword, 100, function(results) {
                     appendResults($("#inputPortal2").val(), $("#results2"), results);
                 }));
                 
                 // Run the query.
-                $.when(searchPortal($("#inputPortal3").val(), keyword, 10, function(results) {
+                $.when(searchPortal($("#inputPortal3").val(), keyword, 100, function(results) {
                     appendResults($("#inputPortal3").val(), $("#results3"), results);
                 }));
             }

@@ -137,6 +137,14 @@
                 return false;
             });
             
+            var searchFields = ["id: ", "itemtype: ", "owner: ", "uploaded: ", "title: ", 
+                                "type: ", "typekeywords: ", "description: ", "tags: ", 
+                                "snippet: ", "extent: ", "spatialreference: ", "accessinformation: ", 
+                                "access: ", "group: ", "numratings: ", "numcomments: ", 
+                                "avgrating: ", "culture: "];
+ 
+            $("#inputKeyword").typeahead({source: searchFields});
+            
         </script>
         
     </body>

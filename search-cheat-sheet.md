@@ -1,8 +1,33 @@
 # Advanced Search Cheat Sheet
 
+## Contents
+* [Defaults](https://github.com/ecaldwell/multi-portal-search/blob/master/search-cheat-sheet.md#defaults)
+* [Modifiers](https://github.com/ecaldwell/multi-portal-search/blob/master/search-cheat-sheet.md#modifiers)
+* [Operators](https://github.com/ecaldwell/multi-portal-search/blob/master/search-cheat-sheet.md#operators)
+* [Search Fields](https://github.com/ecaldwell/multi-portal-search/blob/master/search-cheat-sheet.md#search-fields)
+* [Examples](https://github.com/ecaldwell/multi-portal-search/blob/master/search-cheat-sheet.md#examples)
+
+## Defaults
+The default search looks across several fields for items and groups.  The best match is always returned.
+#### Items
+The default fields are title, tags, snippet, description, accessinformation, spatialreference, type, and typekeywords.
+#### Groups
+The default fields are id, title, description, snippet, tags, and owner.
+
+## Modifiers
+#### Wildcards
+Single and multiple character wildcard searches within single terms (not within phrase queries) are supported. The single character wildcard and the multiple character wildcard cannot be used in the same search.
+
+* Single character wildcard search: use the `?` symbol.
+* Multiple character wildcard search: use the `*` symbol.
+#### Ranges
+Range searches allow you to match a single field or multiple field values between the lower and upper bound. Range queries can be inclusive or exclusive of the upper and lower bounds. Inclusive range queries are denoted by square brackets. Exclusive range queries are denoted by curly brackets.
+#### Boosting a Term
+Boosting allows you to control the relevance of an item by boosting its term. To boost a term, use the caret (^) symbol with a boost factor (a number) at the end of the term you are searching. The higher the boost factor, the more relevant the term will be.
+
 ## Operators
 #### AND
-The AND operator performs matching where both terms exist in either the given field or the default fields).
+The AND operator performs matching where both terms exist in either the given field or the default fields.
 #### OR
 The OR operator links two terms and finds a match if either term exists.
 #### +
@@ -20,7 +45,7 @@ Item type can be URL, text, or file.
 ####owner
 Owner of the item, for example, owner:esri returns all content published by esri.  
 ####uploaded
-Uploaded is the date uploaded, for example uploaded: [0000001249084800000 TO 0000001249548000000] finds all items published between August 1, 2009, 12:00AM to August 6, 2009 08:40AM. 
+The date uploaded, for example uploaded: [0000001249084800000 TO 0000001249548000000] finds all items published between August 1, 2009, 12:00AM to August 6, 2009 08:40AM. 
 ####title
 Item title, for example, title:"Southern California" returns items with Southern California in the title.
 ####type
@@ -52,5 +77,13 @@ Average rating, for example, avgrating:3.5 returns items with 3.5 as the average
 ####culture
 Culture, for example, culture:en-US, returns the locale of the item. The search engine treats the two parts of the culture code as two different terms, and searches for individual languages can be done. For example, culture:en returns all records that have an "en" in their culture code. There may be overlaps between the codes used for language and the codes used for country, for instance fr-FR, but if the client needs to target a code with this problem, they can pass in the complete code. 
 
+## Examples
+* Find all items created between December 1, 2009, and December 9, 2009: `created: [0000001259692864000 TO 0000001260384065000]`
+* Find all items from the owners between arcgis_explorer and esri, not including arcgis_explorer and esri: `owner:{arcgis_explorer TO esri}`
+* Search for "recent fires" and make "fires" be more relevant: `recent fires^5`
+* Search for an item that contains the terms "recent" and "fires": `recent AND fires`
+* Search for an item that contains the terms "recent fires" or "fires": `"recent fires" OR fires`
+* Search for items that must contain "fires" and may contain "recent": `recent +fires`
+* Search for items that contain "California" but not "Imagery": `California NOT Imagery`
 
 [Source](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#//02r3000000mn000000)

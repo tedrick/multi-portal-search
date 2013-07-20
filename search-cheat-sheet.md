@@ -20,28 +20,30 @@ Single and multiple character wildcard searches within single terms (not within 
 
 * Single character wildcard search: use the `?` symbol.
 * Multiple character wildcard search: use the `*` symbol.
+
 #### Ranges
 Range searches allow you to match a single field or multiple field values between the lower and upper bound. Range queries can be inclusive or exclusive of the upper and lower bounds. Inclusive range queries are denoted by square brackets. Exclusive range queries are denoted by curly brackets.
+
 #### Boosting a Term
-Boosting allows you to control the relevance of an item by boosting its term. To boost a term, use the caret (^) symbol with a boost factor (a number) at the end of the term you are searching. The higher the boost factor, the more relevant the term will be.
+Boosting allows you to control the relevance of an item by boosting its term. To boost a term, use the `^` symbol with a boost factor (a number) at the end of the term you are searching. The higher the boost factor, the more relevant the term will be.
 
 ## Operators
 #### AND
-The AND operator performs matching where both terms exist in either the given field or the default fields.
+The `AND` operator performs matching where both terms exist in either the given field or the default fields.
 #### OR
-The OR operator links two terms and finds a match if either term exists.
+The `OR` operator links two terms and finds a match if either term exists.
 #### +
-The "+", or the required operator, requires that the term after the "+" symbol exist somewhere in the given field or the default fields.
+Requires that the term after the `+` symbol exist somewhere in the given field or the default fields.
 #### NOT
-The NOT operator excludes items that contain the term after NOT. This is equivalent to a difference using sets.
+Excludes items that contain the term after `NOT`. This is equivalent to a difference using sets.
 ####\-
-The "-", or the prohibit operator, excludes items that contain the term after the "-" symbol.
+Excludes items that contain the term after the `-` symbol.
 
 ## Search Fields
 ####id
 ID of the item, for example, `id:4e770315ad9049e7950b552aa1e40869` returns the item for that ID.  
 ####itemtype
-Item type can be URL, text, or file.  
+Item type can be `url`, `text`, or `file`.  
 ####owner
 Owner of the item, for example, `owner:esri` returns all content published by esri.  
 ####uploaded
